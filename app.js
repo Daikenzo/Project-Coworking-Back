@@ -3,10 +3,12 @@ const morgan = require('morgan')
 const sequelize = require('./db/sequelize')
 const path = require('path')
 const app = express()
-const port = 3010
+const port = 3010;
+const cors = require('cors');
 
 sequelize.initDb()
 
+app.use(cors());
 app.use(morgan('dev'))
 app.use(express.json())
 
