@@ -9,10 +9,10 @@ module.exports = (CoworkingModel, UserModel, RoleModel, ReviewModel) => {
         })
     })
 
-    Promise.all(rolePromises).then(() => {
+    Promise.all(rolePromises).then(async () => {
         const userPromises = []
         userPromises.push(
-            RoleModel.findOne({ where: { label: 'editor' } })
+            await RoleModel.findOne({ where: { label: 'editor' } })
                 .then(role => {
                     return bcrypt.hash('mdp', 10)
                         .then(hash => {
@@ -23,12 +23,23 @@ module.exports = (CoworkingModel, UserModel, RoleModel, ReviewModel) => {
                             })
                         })
                 }),
-            RoleModel.findOne({ where: { label: 'admin' } })
+            await RoleModel.findOne({ where: { label: 'admin' } })
                 .then(role => {
                     return bcrypt.hash('mdp', 10)
                         .then(hash => {
                             return UserModel.create({
                                 username: 'Pierre',
+                                password: hash,
+                                RoleId: role.id
+                            })
+                        })
+                }),
+            await RoleModel.findOne({ where: { label: 'user' } })
+                .then(role => {
+                    return bcrypt.hash('mdp', 10)
+                        .then(hash => {
+                            return UserModel.create({
+                                username: 'Paul',
                                 password: hash,
                                 RoleId: role.id
                             })

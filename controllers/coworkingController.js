@@ -40,13 +40,15 @@ exports.findCoworkingByPk = (req, res) => {
 
 exports.createCoworking = (req, res) => {
     const newCoworking = req.body
+    // console.log(newCoworking)
     CoworkingModel
         .create({
             name: newCoworking.name,
             price: newCoworking.price,
             superficy: newCoworking.superficy,
             capacity: newCoworking.capacity,
-            address: newCoworking.address
+            address: newCoworking.address,
+            UserId: req.UserId? req.UserId : newCoworking.RoleId
         })
         .then((result) => {
             res.status(201).json({ message: 'Un coworking a bien été ajouté.', data: result })

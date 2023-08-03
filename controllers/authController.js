@@ -31,7 +31,7 @@ exports.signUp = (req, res) => {
 exports.login = (req, res) => {
   UserModel.findOne({ where: { username: req.body.username } })
     .then((user) => {
-      console.log(user);
+      // console.log(user);
       if (!user) return res.status(404).json({ message: `L'utilisateur n'existe pas` });
       bcrypt.compare(req.body.password, user.password).then((isValid) => {
         if (isValid) {
@@ -82,6 +82,8 @@ exports.restrictTo = (roleParam) => {
       .then((user) => {
         return RoleModel.findByPk(user.RoleId).then((role) => {
           if (rolesHierarchy[role.label].includes(roleParam)) {
+            console.log("UserId",user.id)
+            req.UserId = user.id;
             return next();
           } else {
             return res.status(403).json({ message: `Vous n'avez pas les droits suffisants` });
