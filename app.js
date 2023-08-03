@@ -3,7 +3,7 @@ const morgan = require('morgan')
 const sequelize = require('./db/sequelize')
 const path = require('path')
 const app = express()
-const port = 3000
+const port = 3010
 
 sequelize.initDb()
 
