@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const coworkingController = require('../controllers/coworkingController')
 const authController = require('../controllers/authController')
-const { CoworkingModel } = require('../db/sequelize')
+const { UserModel, CoworkingModel } = require('../db/sequelize')
 const multer = require('../middleware/multer-config');
 
 router
@@ -12,7 +12,8 @@ router
 
 router
     .route('/withImg')
-    .post(authController.protect, authController.restrictTo("editor"), multer, coworkingController.createCoworkingWithImage)
+    .post(authController.protect, authController.restrictTo("editor"), 
+    multer, coworkingController.createCoworkingWithImage)
 
 router
     .route('/withReview')
