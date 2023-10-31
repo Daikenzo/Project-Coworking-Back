@@ -13,6 +13,20 @@ exports.findAllUsers = (req, res) => {
         })
 }
 
+exports.findUser = (req, res) => {
+    UserModel.scope('withoutPassword')
+        .findByPk(req.params.id)
+        .then(result => {
+            if (!result) {
+                res.status(404).json({ message: 'Aucun utilisateur trouvé' })
+            } else {
+            res.json({ message: 'La liste des utilisateurs a bien été récupérée.', data: result })
+        }})
+        .catch(error => {
+            res.status(500).json({ message: error })
+        })
+}
+
 exports.updateUser = (req, res) => {
     UserModel
         .findByPk(req.params.id)

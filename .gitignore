@@ -1,2 +1,11 @@
+## Node
+# modules
 node_modules
-images
+images/*
+middleware
+
+## Google Drive Generate File
+desktop.ini
+
+## Don't Ignore this
+!images/default.png
