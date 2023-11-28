@@ -11,12 +11,12 @@ router
     .post(authController.protect, authController.restrictTo("editor"), coworkingController.createCoworking)
 
 router
-    .route('/withImg')
+    .route('/withimg')
     .post(authController.protect, authController.restrictTo("editor"), 
     multer, coworkingController.createCoworkingWithImage)
 
 router
-    .route('/withReview')
+    .route('/withreview')
     .get(coworkingController.findAllCoworkingsByReview)
 
 router

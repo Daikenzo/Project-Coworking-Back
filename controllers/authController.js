@@ -49,7 +49,7 @@ exports.login = (req, res) => {
 
           res.json({ message: "login réussi", data: token });
         } else {
-          return res.json({ message: `Le mot de passe n'est pas correct` });
+          return res.res.status(406).json({ message: `Le mot de passe n'est pas correct` });
         }
       });
     })

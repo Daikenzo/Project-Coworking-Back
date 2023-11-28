@@ -7,11 +7,13 @@ router
     .route('/')
     .get(userController.findAllUsers)
 
-
-
 router
     .route('/login')
     .post(authController.login)
+
+router
+    .route('/login/signup')
+    .post(authController.signUp)
 
 router
     .route('/:id')

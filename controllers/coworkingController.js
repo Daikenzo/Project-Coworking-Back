@@ -14,7 +14,9 @@ exports.findAllCoworkings = (req, res) => {
 }
 
 exports.findAllCoworkingsWithRawSql = (req, res) => {
-    sequelize.query("SELECT name, rating FROM  `coworkings` LEFT JOIN `reviews` ON `coworkings`.`id` = `reviews`.`coworkingId`", { type: QueryTypes.SELECT })
+    sequelize.query(
+        "SELECT name, rating FROM  `coworkings` LEFT JOIN `reviews` ON `coworkings`.`id` = `reviews`.`coworkingId`", 
+        { type: QueryTypes.SELECT })
         // .findAll({ include: ReviewModel })
         .then(result => {
             res.json({ message: 'La liste des coworkings a bien été récupérée.', data: result })
@@ -140,7 +142,7 @@ exports.findAllCoworkingsByReview = (req, res) => {
         include: {
             model: ReviewModel,
             where: {
-                rating: { [Op.gte]: 4 }
+                rating: { [Op.gte]: minRate }
             }
         }
     })
