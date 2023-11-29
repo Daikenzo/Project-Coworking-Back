@@ -1,4 +1,5 @@
-const { UniqueConstraintError, ValidationError } = require("sequelize");
+const { checkIsDefaultValidatorErrorMessage } = require("./errorController");
+const { ValidationError } = require('sequelize');
 const { UserModel, RoleModel } = require("../db/sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -20,10 +21,13 @@ exports.signUp = (req, res) => {
       });
     })
     .catch((error) => {
-      if (error instanceof ValidationError || error instanceof UniqueConstraintError) {
-        return res.status(400).json({ message: error.message });
+      // Redirect Error
+      if (error instanceof ValidationError) {
+        checkIsDefaultValidatorErrorMessage(error);
+        // Return Error 400
+        return res.status(400).json({ message: `${error.message}` });
       }
-
+      // Default Error
       res.status(500).json({ message: error });
     });
 };

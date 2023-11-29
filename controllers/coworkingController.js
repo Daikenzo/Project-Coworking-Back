@@ -57,9 +57,13 @@ exports.createCoworking = (req, res) => {
             res.status(201).json({ message: 'Un coworking a bien été ajouté.', data: result })
         })
         .catch((error) => {
-            if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
-                return res.status(400).json({ message: error.message })
+            // Redirect Error
+            if (error instanceof ValidationError) {
+              checkIsDefaultValidatorErrorMessage(error);
+              // Return Error 400
+              return res.status(400).json({ message: `${error.message}` });
             }
+            // Default Error
             res.status(500).json({ message: `Une erreur est survenue :  ${error}` })
         })
 }
@@ -110,8 +114,11 @@ exports.updateCoworking = (req, res) => {
             }
         })
         .catch(error => {
-            if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
-                return res.status(400).json({ message: error.message })
+            // Redirect Error
+            if (error instanceof ValidationError) {
+                checkIsDefaultValidatorErrorMessage(error);
+                // Return Error 400
+                return res.status(400).json({ message: `${error.message}` });
             }
             res.status(500).json({ message: error.message })
         })

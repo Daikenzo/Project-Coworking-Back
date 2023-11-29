@@ -1,4 +1,5 @@
-const { UniqueConstraintError, ValidationError, Op } = require('sequelize')
+const { checkIsDefaultValidatorErrorMessage } = require("./errorController");
+const { ValidationError } = require('sequelize')
 const { ReviewModel, UserModel } = require('../db/sequelize')
 
 exports.findAllReviews = (req, res) => {
@@ -41,9 +42,12 @@ exports.updateReview = (req, res) => {
             }
         })
         .catch(error => {
+            // Redirect Error
             if (error instanceof ValidationError) {
-                return res.status(400).json({ message: error.message })
-            }
+                checkIsDefaultValidatorErrorMessage(error);
+                // Return Error 400
+                return res.status(400).json({ message: `${error.message}` });
+              }
             res.status(500).json({ message: error.message })
         })
 }

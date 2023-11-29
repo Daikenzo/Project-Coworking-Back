@@ -1,4 +1,5 @@
-const { UniqueConstraintError, ValidationError } = require('sequelize')
+const { checkIsDefaultValidatorErrorMessage } = require("./errorController");
+const { ValidationError } = require('sequelize');
 const { UserModel } = require('../db/sequelize')
 const bcrypt = require('bcrypt')
 
@@ -47,9 +48,13 @@ exports.updateUser = (req, res) => {
             }
         })
         .catch(error => {
-            if (error instanceof UniqueConstraintError || error instanceof ValidationError) {
-                return res.status(400).json({ message: error.message })
+            // Redirect Error
+            if (error instanceof ValidationError) {
+              checkIsDefaultValidatorErrorMessage(error);
+              // Return Error 400
+              return res.status(400).json({ message: `${error.message}` });
             }
+            // Default Request
             res.status(500).json({ message: error.message })
         })
 }
