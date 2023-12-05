@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
             as: 'userId'
           },
           validate: {
+            // Unique Constraint alt function
             async isRedemptionUniqueToUser(userId) {
               const redemptions = await sequelize.models.Promotion_Redemptions.findAll(
                 {

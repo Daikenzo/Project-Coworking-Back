@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 notEmpty: {
                     msg: 'Le nom ne peut pas être vide'
+                },
+                len:{
+                    msg:"Le nom doit contenir entre 3 à 20 charactères",
+                    args:[3,20]
                 }
             },
             unique: {

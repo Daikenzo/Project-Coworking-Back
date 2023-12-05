@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const setDataSample = require('./setDataSample')
 
-const sequelize = new Sequelize('coworking_07_2023', 'root', 'cV$e&alj85k9kdSQ@N', {
+const sequelize = new Sequelize('Pisc_Bdx_Coworking', 'root', 'cV$e&alj85k9kdSQ@N', {
     host: 'localhost',
     dialect: 'mariadb',
     logging: false

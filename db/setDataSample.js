@@ -1,14 +1,15 @@
 const mockCoworkings = require('./mock-coworkings')
 const bcrypt = require('bcrypt')
 const roles = require('./roles.json')
+const generatebcryt = bcrypt.genSalt(10)
 
 module.exports = (CoworkingModel, UserModel, RoleModel, ReviewModel) => {
     const rolePromises = roles.map(role => {
         return RoleModel.create({
             label: role
-        })
-    })
-
+        });
+    });
+    console.log(generatebcryt);
     Promise.all(rolePromises).then(async () => {
         const userPromises = []
         userPromises.push(
@@ -73,5 +74,9 @@ module.exports = (CoworkingModel, UserModel, RoleModel, ReviewModel) => {
                     })
                 })
             })
+    })
+    .catch(error => {
+        
+        console.log(`Une erreur est survenue lors de la génération des données externe : ${error.original.sqlMessage}`)
     })
 }
