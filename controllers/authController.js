@@ -3,7 +3,8 @@ const { ValidationError } = require('sequelize');
 const { UserModel, RoleModel } = require("../db/sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const SECRET_KEY = "ma_clé_secrète";
+// Initial text : Bordeaux_Coworking_Piscine2023SecretKey
+const SECRET_KEY = "$2y$10$o7w7qK1b77e2Y10up9mdN.HuUfWeTZUKobV0mhnwG.ajVpt7VMDla";
 
 const rolesHierarchy = {
   user: ["user"],
@@ -53,7 +54,7 @@ exports.login = (req, res) => {
 
           res.json({ message: "login réussi", data: token });
         } else {
-          return res.res.status(406).json({ message: `Le mot de passe n'est pas correct` });
+          return res.status(406).json({ message: `Le mot de passe n'est pas correct` });
         }
       });
     })

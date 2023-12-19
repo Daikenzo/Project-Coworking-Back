@@ -1,7 +1,6 @@
 const mockCoworkings = require('./mock-coworkings')
 const bcrypt = require('bcrypt')
 const roles = require('./roles.json')
-const generatebcryt = bcrypt.genSalt(10)
 
 module.exports = (CoworkingModel, UserModel, RoleModel, ReviewModel) => {
     const rolePromises = roles.map(role => {
@@ -9,7 +8,6 @@ module.exports = (CoworkingModel, UserModel, RoleModel, ReviewModel) => {
             label: role
         });
     });
-    console.log(generatebcryt);
     Promise.all(rolePromises).then(async () => {
         const userPromises = []
         userPromises.push(
